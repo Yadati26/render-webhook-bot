@@ -6,7 +6,7 @@ import json
 
 app = Flask(__name__)
 
-FORWARD_URL = "http://localhost:5000/webhook"  # Your local Flask bot
+FORWARD_URL = "https://2c7b-192-166-246-184.ngrok-free.app/webhook"  # Ngrok relay to your laptop
 
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -14,7 +14,6 @@ os.makedirs(LOG_DIR, exist_ok=True)
 @app.route('/webhook', methods=['POST'])
 def receive_alert():
     data = request.get_json()
-    # Safe filename timestamp
     timestamp = datetime.datetime.utcnow().isoformat()
     safe_timestamp = timestamp.replace(":", "-").replace(".", "_")
 
@@ -24,8 +23,8 @@ def receive_alert():
         json.dump(data, f)
 
     print(f"[RECEIVED] {timestamp}: {data}")
-    
-    # Forward to local bot
+
+    # Forward to ngrok tunnel
     try:
         r = requests.post(FORWARD_URL, json=data, timeout=2)
         print(f"[FORWARDED] Status: {r.status_code}")
