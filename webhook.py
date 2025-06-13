@@ -4,7 +4,7 @@ import datetime
 import os
 
 app = Flask(__name__)
-FORWARD_URL = "http://localhost:5000/webhook"  # Local bot on your laptop
+FORWARD_URL = "https://7216-192-166-246-184.ngrok-free.app/webhook"  # Local bot on your laptop
 
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
